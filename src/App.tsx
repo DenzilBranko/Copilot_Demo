@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import './App.css';
+import { convertToObject } from 'typescript';
 
 const App: React.FC = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState<string>('');
 
   const addTag = () => {
-    if (newTag.trim() !== '') {
-      setTags([...tags, newTag]);
-      setNewTag('');
-    }
+    const nextTagNumber = tags.length + 1;
+    const nextTag = `Tag${nextTagNumber}`;
+    setTags([...tags, nextTag]);
   };
 
   const removeTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
   };
 
+  console.info("taga",tags)
   return (
     <div className="App">
       <div>
@@ -54,27 +55,19 @@ const App: React.FC = () => {
           </select>
         </div>
         <div>
-            <div>
+          <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', flexDirection: 'row' }}>
             {tags.map((tag, index) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-              <input type="text" value={tag} readOnly style={{ width: '100px', marginRight: '5px' }} />
-              <button onClick={() => removeTag(index)} style={{ marginRight: '5px' }}>-</button>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '5px', padding: '5px' }}>
+                <span onClick={() => removeTag(index)} style={{ border: '2px solid lightgreen', padding: '8px', boxSizing: 'border-box', marginRight: '10px' }}>{tag} <span style={{ fontWeight: 'bold', color: 'blue', fontSize: '10px', marginLeft:'30px',display:'inline-block' }}>-</span></span>
               </div>
             ))}
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-              <input
-              type="text"
-              placeholder="Tag"
-              value={newTag}
-              onChange={(e) => setNewTag(e.target.value)}
-              style={{ width: '100px', marginRight: '5px' }}
-              />
               <button onClick={addTag} style={{ marginLeft: '5px' }}>+</button>
             </div>
-            </div>
-            </div>
+          </div>
         </div>
       </div>
+    </div>
   );
 }
 
