@@ -59,19 +59,37 @@ body {
 
 .article {
     display: flex;
+    align-items: center;
     border: 1px solid green;
     padding: 10px;
     gap: 10px;
 }
 
+.article-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid green;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
 .hero-image {
-    flex: 1;
+    position: relative;
+    height: 100px; /* Explicit height for the image container */
+    width: 100px;  /* Explicit width for the image container */
+    overflow: hidden; /* Ensures no overflow from the image */
     border: 1px solid green;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 10px;
     font-size: 14px;
     color: gray;
+    background-color: #fff;
+    border-radius: 5px;
+    flex-shrink: 0;
 }
 
 .hero-image img.thumbnail {
@@ -81,16 +99,38 @@ body {
     border-radius: 8px;
 }
 
+.hero-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* Ensures the image covers the container */
+    display: block; /* Ensures no extra space below the image */
+    margin: 0; /* Removes any default margin */
+    padding: 0; /* Removes any default padding */
+}
+
 .text-content {
-    flex: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
+    justify-content: center;
+    height: 100px;
+    margin-left: 10px;
 }
 
 .title-input,
 .subtitle-input {
-    border: 1px solid green;
-    padding: 5px;
     width: 100%;
+    padding: 5px;
+    border: 1px solid green;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.title-input {
+    margin-bottom: 5px;
 }

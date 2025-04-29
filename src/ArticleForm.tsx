@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './ArticleForm.css';
 
 const ArticleForm: React.FC = () => {
@@ -10,7 +11,9 @@ const ArticleForm: React.FC = () => {
                     hero: "https://www.freecodecamp.org/news/content/images/size/w2000/2023/06/Screenshot-2023-06-14-at-12.42.04-PM.png",
                     articleId: "a2b448sq",
                     categoryId: "r4wd2u8",
+                    categoryName: "Programming",
                     authorId: "y7w3w242",
+                    authorName: "John Doe",
                     articleType: 1,
                     tags: ["Science", "Technology"]
                 },
@@ -19,7 +22,9 @@ const ArticleForm: React.FC = () => {
                     hero: "https://www.bigdatawire.com/wp-content/uploads/2024/05/AI-copilot_shutterstock_AI-generated.jpg",
                     articleId: "b2n2ss92",
                     categoryId: "ewd32s3",
+                    categoryName: "Artificial Intelligence",
                     authorId: "n7232g2",
+                    authorName: "Jane Smith",
                     articleType: 2,
                     tags: ["AI", "Technology"]
                 }
@@ -35,13 +40,19 @@ const ArticleForm: React.FC = () => {
         tag: ''
     });
 
-    const uniqueAuthors = [...new Set(data.articles.map((article: any) => article.authorId))];
-    const uniqueCategories = [...new Set(data.articles.map((article: any) => article.categoryId))];
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    const uniqueAuthors = [...new Map(data.articles.map((article: any) => [article.authorId, article.authorName])).entries()];
+    const uniqueCategories = [...new Map(data.articles.map((article: any) => [article.categoryId, article.categoryName])).entries()];
     const uniqueTags = [...new Set(data.articles.flatMap((article: any) => article.tags))];
     const uniqueArticleTypes = [...new Set(data.articles.map((article: any) => article.articleType))];
 
     const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFilters({ ...filters, [e.target.name]: e.target.value });
+    };
+
+    const handleArticleClick = (articleId: string) => {
+        navigate(`/article-details/${articleId}`); // Navigate to ArticleDetails with articleId
     };
 
     const filteredArticles = data.articles.filter((article: any) => {
@@ -58,17 +69,17 @@ const ArticleForm: React.FC = () => {
             <div className="filters">
                 <select name="authorId" value={filters.authorId} onChange={handleFilterChange}>
                     <option value="">Author</option>
-                    {uniqueAuthors.map((authorId) => (
+                    {uniqueAuthors.map(([authorId, authorName]) => (
                         <option key={authorId} value={authorId}>
-                            {authorId}
+                            {authorName}
                         </option>
                     ))}
                 </select>
                 <select name="categoryId" value={filters.categoryId} onChange={handleFilterChange}>
                     <option value="">Category</option>
-                    {uniqueCategories.map((categoryId) => (
+                    {uniqueCategories.map(([categoryId, categoryName]) => (
                         <option key={categoryId} value={categoryId}>
-                            {categoryId}
+                            {categoryName}
                         </option>
                     ))}
                 </select>

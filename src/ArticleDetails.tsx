@@ -8,6 +8,7 @@ const ArticleDetails: React.FC = () => {
         authorName: "Anonymous",
         authorImage: "https://via.placeholder.com/50", // Placeholder for author image
         description: "This is a detailed description of the article.",
+        subtitle: "A brief overview of GitHub Copilot features and use cases.", // Added subtitle
         articleType: "text", // Can be "text" or "video"
         mediaUrl: "https://www.example.com/video.mp4", // For video type
         tags: ["Tag1", "Tag2"]
@@ -15,33 +16,29 @@ const ArticleDetails: React.FC = () => {
 
     return (
         <div className="article-details-container">
-            <input type="text" className="title-input" value={article.title} readOnly />
+            <div className="title">{article.title}</div>
             <div className="hero-image">
-                <img src={article.hero} alt={article.title} />
+                <div className="hero-placeholder">Hero Image Placeholder</div>
             </div>
             <div className="author-details">
                 <div className="author-hover">
-                    <img src={article.authorImage} alt={article.authorName} className="author-image" />
-                    <span className="author-name">{article.authorName}</span>
+                    <div className="author-name">Author: {article.authorName}</div>
                     <p className="author-description">{article.description}</p>
                 </div>
             </div>
-            <input type="text" className="subtitle-input" placeholder="Subtitle" readOnly />
+            <div className="subtitle bordered-field">{article.subtitle}</div> {/* Updated subtitle field */}
             <div className="content">
                 {article.articleType === "text" ? (
                     <div className="description">{article.description}</div>
                 ) : (
-                    <video controls className="media-player">
-                        <source src={article.mediaUrl} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
+                    <div className="description">This is a video article.</div>
                 )}
             </div>
             <div className="tags">
                 {article.tags.map((tag, index) => (
-                    <button key={index} className="tag-button">
+                    <span key={index} className="tag">
                         {tag}
-                    </button>
+                    </span>
                 ))}
             </div>
         </div>
