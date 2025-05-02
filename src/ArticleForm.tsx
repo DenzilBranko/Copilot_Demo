@@ -1,38 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ArticleForm.css';
+import articlesData from './data/articles.json'; // Import JSON data
 
 const ArticleForm: React.FC = () => {
-    const jsonData = {
-        data: {
-            articles: [
-                {
-                    title: "GitHub Copilot - About, Features and Use Cases",
-                    hero: "https://www.example.com/images/github-copilot.jpg", // Updated to a .jpg image
-                    articleId: "a2b448sq",
-                    categoryId: "r4wd2u8",
-                    categoryName: "Programming",
-                    authorId: "y7w3w242",
-                    authorName: "John Doe",
-                    articleType: 1,
-                    tags: ["Science", "Technology"]
-                },
-                {
-                    title: "Has Codeium Cracked the Code for AI Assistants?",
-                    hero: "https://www.bigdatawire.com/wp-content/uploads/2024/05/AI-copilot_shutterstock_AI-generated.jpg",
-                    articleId: "b2n2ss92",
-                    categoryId: "ewd32s3",
-                    categoryName: "Artificial Intelligence",
-                    authorId: "n7232g2",
-                    authorName: "Jane Smith",
-                    articleType: 2,
-                    tags: ["AI", "Technology"]
-                }
-            ]
-        }
-    };
-
-    const [data] = useState(jsonData.data);
+    const [data, setData] = useState(articlesData);
     const [filters, setFilters] = useState({
         authorId: '',
         categoryId: '',
@@ -40,7 +12,7 @@ const ArticleForm: React.FC = () => {
         tag: ''
     });
 
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const uniqueAuthors = [...new Map(data.articles.map((article: any) => [article.authorId, article.authorName])).entries()];
     const uniqueCategories = [...new Map(data.articles.map((article: any) => [article.categoryId, article.categoryName])).entries()];
@@ -52,7 +24,7 @@ const ArticleForm: React.FC = () => {
     };
 
     const handleArticleClick = (articleId: string) => {
-        navigate(`/article-details/${articleId}`); // Navigate to ArticleDetails with articleId
+        navigate(`/article-details/${articleId}`); // Pass articleId to ArticleDetails
     };
 
     const filteredArticles = data.articles.filter((article: any) => {
@@ -106,7 +78,7 @@ const ArticleForm: React.FC = () => {
                         className="article" 
                         key={article.articleId} 
                         onClick={() => handleArticleClick(article.articleId)} 
-                        style={{ cursor: 'pointer' }} // Add pointer cursor for better UX
+                        style={{ cursor: 'pointer' }}
                     >
                         <div className="hero-image">
                             <img src={article.hero} alt={article.title} className="thumbnail" />

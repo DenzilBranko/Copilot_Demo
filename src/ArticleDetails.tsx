@@ -1,18 +1,15 @@
 import React from 'react';
-import styles from './ArticleDetails.module.css'; // Import CSS Module
+import { useParams } from 'react-router-dom';
+import styles from './ArticleDetails.module.css';
+import articlesData from './data/articles.json'; // Import JSON data
 
 const ArticleDetails: React.FC = () => {
-    const article = {
-        title: "GitHub Copilot - About, Features and Use Cases",
-        hero: "https://www.bigdatawire.com/wp-content/uploads/2024/05/AI-copilot_shutterstock_AI-generated.jpg",
-        authorName: "John Doe",
-        authorImage: "https://via.placeholder.com/50", // Placeholder for author image
-        description: "This is a detailed description of the article.",
-        subtitle: "A brief overview of GitHub Copilot features and use cases.", // Added subtitle
-        articleType: "text", // Can be "text" or "video"
-        mediaUrl: "https://www.example.com/video.mp4", // For video type
-        tags: ["Tag1", "Tag2"]
-    };
+    const { articleId } = useParams<{ articleId: string }>(); // Get articleId from route params
+    const article = articlesData.articles.find((a) => a.articleId === articleId); // Find the article by ID
+
+    if (!article) {
+        return <div>Article not found</div>;
+    }
 
     return (
         <div className={styles['article-details-container']}>
@@ -28,7 +25,7 @@ const ArticleDetails: React.FC = () => {
             </div>
             <div className={`${styles.subtitle} ${styles['bordered-field']}`}>{article.subtitle}</div>
             <div className={styles.content}>
-                {article.articleType === "text" ? (
+                {article.articleType === 1 ? (
                     <div className={styles.description}>{article.description}</div>
                 ) : (
                     <div className={styles.description}>This is a video article.</div>
