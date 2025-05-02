@@ -8,7 +8,7 @@ const ArticleForm: React.FC = () => {
             articles: [
                 {
                     title: "GitHub Copilot - About, Features and Use Cases",
-                    hero: "https://www.freecodecamp.org/news/content/images/size/w2000/2023/06/Screenshot-2023-06-14-at-12.42.04-PM.png",
+                    hero: "https://www.example.com/images/github-copilot.jpg", // Updated to a .jpg image
                     articleId: "a2b448sq",
                     categoryId: "r4wd2u8",
                     categoryName: "Programming",
@@ -102,7 +102,12 @@ const ArticleForm: React.FC = () => {
             </div>
             <div className="articles">
                 {filteredArticles.map((article: any) => (
-                    <div className="article" key={article.articleId}>
+                    <div 
+                        className="article" 
+                        key={article.articleId} 
+                        onClick={() => handleArticleClick(article.articleId)} 
+                        style={{ cursor: 'pointer' }} // Add pointer cursor for better UX
+                    >
                         <div className="hero-image">
                             <img src={article.hero} alt={article.title} className="thumbnail" />
                         </div>
